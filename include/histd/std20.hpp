@@ -1,5 +1,5 @@
-#if !defined(HPPX_STD20_HPP_) && (__cplusplus < 202002L)
-#define HPPX_STD20_HPP_
+#if !defined(HISTD_STD20_HPP_) && (__cplusplus < 202002L)
+#define HISTD_STD20_HPP_
 
 #include <limits>
 #include <type_traits>
@@ -61,4 +61,4 @@ constexpr bool in_range(T t) noexcept {
 
 }  // namespace std
 
-#endif  // HPPX_STD20_HPP_
+#endif  // HISTD_STD20_HPP_

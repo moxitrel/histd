@@ -1,9 +1,9 @@
-#ifndef HPPXT_TYPE_HPP_
-#define HPPXT_TYPE_HPP_
+#ifndef HPPX_TYPE_HPP_
+#define HPPX_TYPE_HPP_
 
 #include <type_traits>
 
-namespace hppxt {
+namespace hppx {
 
 //
 // lvalueof: rvalue -> lvalue
@@ -14,6 +14,29 @@ constexpr auto& lvalueof(std::add_rvalue_reference_t<T> x) {
 }
 
 //
+// reinterpret_cast_cv: const volatile S* -> const volatile T*
+//
+template <typename T, typename S>
+constexpr auto reinterpret_cast_cv(S* p) {
+  return reinterpret_cast<T*>(p);
+}
+
+template <typename T, typename S>
+constexpr auto reinterpret_cast_cv(const S* p) {
+  return reinterpret_cast<const T*>(p);
+}
+
+template <typename T, typename S>
+constexpr auto reinterpret_cast_cv(volatile S* p) {
+  return reinterpret_cast<volatile T*>(p);
+}
+
+template <typename T, typename S>
+constexpr auto reinterpret_cast_cv(const volatile S* p) {
+  return reinterpret_cast<const volatile T*>(p);
+}
+
+//
 // TypeOf: Show the type of variable in compiler error message
 //
 // Usage: TypeOf<decltype(x)> _t;
@@ -21,33 +44,7 @@ constexpr auto& lvalueof(std::add_rvalue_reference_t<T> x) {
 template <typename T>
 class TypeOf;
 
-//
-// rebind_pointer_cv: const volatile S* -> const volatile T*
-//
-template <typename T, typename S>
-constexpr auto rebind_pointer_cv(S* p) {
-  return reinterpret_cast<T*>(p);
-}
-
-template <typename T, typename S>
-constexpr auto rebind_pointer_cv(const S* p) {
-  return reinterpret_cast<const T*>(p);
-}
-
-template <typename T, typename S>
-constexpr auto rebind_pointer_cv(volatile S* p) {
-  return reinterpret_cast<volatile T*>(p);
-}
-
-template <typename T, typename S>
-constexpr auto rebind_pointer_cv(const volatile S* p) {
-  return reinterpret_cast<const volatile T*>(p);
-}
-
-/////////////////////////////////
-
 #include <string>
-
 template <typename T>
 constexpr std::string_view TypeOf() {
 #if defined(__clang__)
@@ -69,6 +66,5 @@ constexpr std::string_view TypeOf() {
 #endif
 }
 
-}  // namespace hppxt
-
-#endif  // HPPXT_TYPE_HPP_
+}  // namespace hppx
+#endif  // HPPX_TYPE_HPP_
